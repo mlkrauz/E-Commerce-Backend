@@ -9,8 +9,7 @@ router.get('/', async (req, res) => {
 	try {
 		const allCategories = await Category.findAll({
 			include: [{
-				model: Product,
-				attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+				model: Product
 			}]
 		})
 
@@ -31,8 +30,7 @@ router.get('/:id', async (req, res) => {
 			req.params.id,
 			{
 				include: [{
-					model: Product,
-          			attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+					model: Product
 				}]
 			}
 

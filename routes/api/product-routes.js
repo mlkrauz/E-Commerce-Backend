@@ -7,12 +7,56 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
+  try {
+    const allProducts = await Product.findAll({
+      include: [
+        {
+          model: Category,
+          attributes: ['category_name']
+        },
+        {
+          model: Tag,
+          attributes: ['tag_name']
+        }
+      ]
+    })
+
+    // Send success response, and retrieved data.
+		res.status(200).json(allProducts)
+
+  } catch (error) {
+    // Error on our end. Change response status to 500, and send the error.
+		res.status(500).json(error)
+  }
 });
 
 // get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  try {
+    const singleProduct = await Product.findByPk(
+      req.params.id,
+      {
+        include: [
+          {
+            model: Category,
+            attributes: ['category_name']
+          },
+          {
+            model: Tag,
+            attributes: ['tag_name']
+          }
+        ]
+      }
+    )
+
+    // Send success response, and retrieved data.
+		res.status(200).json(singleProduct)
+  } catch (error) {
+    // Error on our end. Change response status to 500, and send the error.
+		res.status(500).json(error)
+  }
 });
 
 // create new product
