@@ -101,7 +101,7 @@ router.delete('/:id', async (req, res) => {
     )
 
     // Send success response, and retrieved data.
-		res.status(200).json(deletedTag)
+		res.status(200).json(`Tag '${req.params.id}' deleted.`)
 
   } catch (error) {
     // Error on our end. Change response status to 500, and send the error.

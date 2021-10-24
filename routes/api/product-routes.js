@@ -136,7 +136,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
   try {
-    const deletedProduct = Product.destroy(
+    const deletedProduct = await Product.destroy(
       {
         where: {
           id: req.params.id
@@ -145,7 +145,9 @@ router.delete('/:id', async (req, res) => {
     )
 
     // Send success response, and retrieved data.
-		res.status(200).json(deletedProduct)
+		.then(
+      () => res.status(200).json(`Product '${req.params.id}' deleted.`)
+    )
 
   } catch (error) {
     // Error on our end. Change response status to 500, and send the error.
